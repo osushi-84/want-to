@@ -57,3 +57,13 @@
 - `やりたいこと.txt` の行きたいライブにナナオアカリ・NEEを追加
 - `index.html` の `artists` 配列と表示件数を最新件数に更新（36）
 - `docs/CURRENT_TASK.md` と `docs/ARCHITECTURE.md` の件数メモを更新
+
+---
+
+## [codex] 2026-06-09 — やってみたいこと追加
+
+### やったこと
+
+- `やりたいこと.txt` のやってみたいことに泥団子作りを追加
+- `index.html` / `demo.html` のやってみたいこと配列に泥団子作りを追加
+- ヒーローのやってみたいこと件数と `docs/ARCHITECTURE.md` の件数メモを 33 件に更新
