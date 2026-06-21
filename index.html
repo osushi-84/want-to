@@ -240,15 +240,15 @@
 
   <div class="hero-stats">
     <div>
-      <div class="hero-stat__n">12</div>
+      <div class="hero-stat__n" id="yariCount">0</div>
       <div class="hero-stat__l">やりたいこと</div>
     </div>
     <div>
-      <div class="hero-stat__n">33</div>
+      <div class="hero-stat__n" id="tryCount">0</div>
       <div class="hero-stat__l">やってみたいこと</div>
     </div>
     <div>
-      <div class="hero-stat__n">36</div>
+      <div class="hero-stat__n" id="artistCount">0</div>
       <div class="hero-stat__l">見たいアーティスト</div>
     </div>
   </div>
@@ -284,7 +284,7 @@
   <div class="eyebrow">— Special —</div>
   <h2 class="sec-title">
     🎵&thinsp;行きたいライブ
-    <span class="live-badge">36 artists</span>
+    <span class="live-badge" id="artistBadge">0 artists</span>
   </h2>
   <div class="sphere-wrap" id="sphereWrap"></div>
 </section>
@@ -295,75 +295,30 @@
 </footer>
 
 <script>
-  /* ── Data ── */
-  const yariItems = [
-    {e:'⚽', t:'サッカー'},
-    {e:'🎾', t:'テニス'},
-    {e:'🏐', t:'バレー'},
-    {e:'🌟', t:'シール交換'},
-    {e:'🍽️', t:'ご飯食べ行く'},
-    {e:'💬', t:'お話'},
-    {e:'🎮', t:'ゲーム'},
-    {e:'🚶', t:'お散歩'},
-    {e:'🐱', t:'猫カフェ'},
-    {e:'🗺️', t:'観光'},
-    {e:'🍡', t:'食べ歩き'},
-    {e:'⚾', t:'キャッチボール'},
-  ];
-
-  const items = [
-    {e:'🏕️', t:'キャンプ'},
-    {e:'🎯', t:'サバゲー'},
-    {e:'🎵', t:'楽器演奏'},
-    {e:'🎬', t:'アニメ制作'},
-    {e:'🗻', t:'富士登山'},
-    {e:'🎨', t:'写生'},
-    {e:'💎', t:'きれいな石を探す'},
-    {e:'🌿', t:'かっこいい木の棒をさがす'},
-    {e:'♠️', t:'がちポーカー'},
-    {e:'🎻', t:'クラシック鑑賞'},
-    {e:'📣', t:'発信'},
-    {e:'✍️', t:'執筆'},
-    {e:'💼', t:'副業'},
-    {e:'📈', t:'経営'},
-    {e:'🍕', t:'ピザづくり'},
-    {e:'❄️', t:'かまくらづくり'},
-    {e:'⭐', t:'星を見る（がちの）'},
-    {e:'🔨', t:'日曜大工（土曜でも可）'},
-    {e:'🌌', t:'オーロラを見る'},
-    {e:'🔍', t:'趣味を見つける'},
-    {e:'☕', t:'カフェ巡り'},
-    {e:'💬', t:'座談会'},
-    {e:'🏹', t:'アーチェリー'},
-    {e:'🎋', t:'弓道'},
-    {e:'📱', t:'アプリ開発'},
-    {e:'👨‍🍳', t:'料理教室'},
-    {e:'🙏', t:'テクノ法要'},
-    {e:'🧳', t:'一人旅'},
-    {e:'⛴️', t:'フェリーに乗る'},
-    {e:'🎭', t:'お笑い見に行く'},
-    {e:'🐾', t:'生き物カフェ'},
-    {e:'🍖', t:'シュラスコ食べる'},
-    {e:'🟤', t:'泥団子作り'},
-  ];
-
-  const artists = [
-    'サカナクション','米津玄師','KANA-BOON','Charlie Puth','Ed Sheeran',
-    'SEKAI NO OWARI','Vaundy','King Gnu','星野源','あいみょん',
-    '相対性理論','Nissy','YOASOBI','Eve','れをる',
-    'ヨルシカ','ずっと真夜中でいいのに。','yama','nowisee','空白ごっこ',
-    'DUSTCELL','神山羊','Pharrel Williams','Taylor Swift','Justin Bieber',
-    'ネクライトーキー','Maroon5','チーム・トリケラトプス','バーバパパ','Marshmello',
-    'ゲスの極み乙女。','藤井風','おいしくるメロンパン','水曜日カンパネラ',
-    'ナナオアカリ','NEE',
-  ];
-
   /* ════════════════════════════
      CAROUSEL
   ════════════════════════════ */
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  function updateCounts(data) {
+    document.getElementById('yariCount').textContent = data.yariItems.length;
+    document.getElementById('tryCount').textContent = data.tryItems.length;
+    document.getElementById('artistCount').textContent = data.artists.length;
+    document.getElementById('artistBadge').textContent = `${data.artists.length} artists`;
+  }
+
   function initCarousel(wrapId, data) {
     const wrap = document.getElementById(wrapId);
     const n = data.length;
+    if (n === 0) return;
     const isMobile = window.innerWidth < 640;
     const cardW = isMobile ? 62 : 85, cardH = isMobile ? 46 : 62;
     const radius = isMobile ? 260 : 600;
@@ -384,7 +339,7 @@
         `width:${cardW}px;height:${cardH}px;`+
         `left:${-cardW/2}px;top:${-cardH/2}px;`+
         `transform:rotateY(${step * i}deg) translateZ(${radius}px);`;
-      card.innerHTML = `<span class="cr-ic">${it.e}</span><span class="cr-tx">${it.t}</span>`;
+      card.innerHTML = `<span class="cr-ic">${escapeHTML(it.e)}</span><span class="cr-tx">${escapeHTML(it.t)}</span>`;
       stage.appendChild(card);
       return { el: card, baseAngle: step * i, inBack: false };
     });
@@ -433,14 +388,12 @@
       requestAnimationFrame(tick);
     })();
   }
-  initCarousel('yariWrap', yariItems);
-  initCarousel('carouselWrap', items);
-
   /* ════════════════════════════
      SPHERE
   ════════════════════════════ */
-  (function initSphere() {
+  function initSphere(artists) {
     const wrap = document.getElementById('sphereWrap');
+    if (artists.length === 0) return;
 
     /* IntersectionObserver で表示されてから起動 */
     const observer = new IntersectionObserver(entries => {
@@ -548,7 +501,25 @@
         requestAnimationFrame(tick);
       })();
     }
-  })();
+  }
+
+  async function init() {
+    const response = await fetch('./data.json');
+    if (!response.ok) {
+      throw new Error(`data.jsonを読み込めませんでした: ${response.status}`);
+    }
+
+    const data = await response.json();
+    updateCounts(data);
+    initCarousel('yariWrap', data.yariItems);
+    initCarousel('carouselWrap', data.tryItems);
+    initSphere(data.artists);
+  }
+
+  init().catch(error => {
+    console.error(error);
+    document.getElementById('artistBadge').textContent = 'load error';
+  });
 </script>
 </body>
 </html>

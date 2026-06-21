@@ -67,3 +67,18 @@
 - `やりたいこと.txt` のやってみたいことに泥団子作りを追加
 - `index.html` / `demo.html` のやってみたいこと配列に泥団子作りを追加
 - ヒーローのやってみたいこと件数と `docs/ARCHITECTURE.md` の件数メモを 33 件に更新
+
+---
+
+## [codex] 2026-06-21 — 表示データの JSON 分離
+
+### やったこと
+
+- `index.html` に直書きしていた `yariItems` / `items` / `artists` を `data.json` に移動
+- `index.html` は `fetch('./data.json')` でデータを読み込み、件数表示・カルーセル・スフィアを初期化する形に変更
+- 件数表示とライブバッジを `data.json` の件数から自動更新するように変更
+
+### 気をつけること
+
+- ローカルで確認する場合、`index.html` を直接開くのではなく `python -m http.server 8000` などで配信して確認する
+- GitHub Pages では `index.html` と同階層の `data.json` がそのまま配信されるため、この構成で動作する
