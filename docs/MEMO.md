@@ -92,3 +92,15 @@
 - `data.json` のやってみたいことに「麻辣湯食べる」を追加
 - `やりたいこと.txt` と `demo.html` の表示データを同期
 - `docs/ARCHITECTURE.md` のやってみたいこと件数を 34 件に更新
+
+---
+
+## [codex] 2026-06-25 — CSS / JavaScript の外部ファイル分離
+
+### やったこと
+
+- `index.html` 内の `<style>` を `style.css` に分離
+- `index.html` 内の `<script>` を `script.js` に分離
+- `index.html` から両ファイルを外部読み込みする構成へ変更
+- 表示や処理の内容は変更せず、ファイル構成のみ整理
+- 外部ファイル参照と主要コードの存在を確認する静的テストを追加

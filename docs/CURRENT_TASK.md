@@ -22,6 +22,7 @@
 - [x] やってみたいこと追加（泥団子作り）
 - [x] `index.html` から表示データを分離し、`data.json` 管理に変更
 - [x] やってみたいこと追加（麻辣湯食べる）
+- [x] `index.html` 内の CSS / JavaScript を `style.css` / `script.js` に分離
 
 ## 次にやること（未定）
 

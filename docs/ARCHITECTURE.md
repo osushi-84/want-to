@@ -8,17 +8,25 @@
 
 ```
 want-to-do/
-├── index.html          # メインページ（本番）
+├── index.html          # メインページのHTML（本番）
+├── style.css           # メインページのスタイル
+├── script.js           # メインページの表示・操作ロジック
 ├── data.json           # 表示データ（やりたいこと・やってみたいこと・行きたいライブ）
 ├── demo.html           # 表示モード比較デモ（横流れ・3Dカルーセル・球体・オービット）
 ├── やりたいこと.txt      # データの元ネタ・メモ
+├── tests/
+│   └── test_static_assets.py # 静的ファイル構成のテスト
 └── docs/
     ├── ARCHITECTURE.md # このファイル
     ├── CURRENT_TASK.md # 進行中タスク
     └── MEMO.md         # 実装ログ
 ```
 
-## index.html の構成
+## メインページの構成
+
+- `index.html`: ページ構造と外部ファイルの読み込み
+- `style.css`: レイアウト、装飾、レスポンシブ対応
+- `script.js`: データ取得、件数表示、カルーセル、スフィアの制御
 
 ### セクション構成
 
@@ -33,7 +41,7 @@ want-to-do/
 ### データ
 
 - 表示データは `data.json` で管理する
-- `index.html` は `fetch('./data.json')` で読み込み、件数表示・カルーセル・スフィアを初期化する
+- `script.js` は `fetch('./data.json')` で読み込み、件数表示・カルーセル・スフィアを初期化する
 - `yariItems`: やりたいこと（現在 12 件）
 - `tryItems`: やってみたいこと（現在 34 件）
 - `artists`: 行きたいライブ（現在 36 件）
