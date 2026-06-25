@@ -35,7 +35,7 @@ want-to-do/
 - 表示データは `data.json` で管理する
 - `index.html` は `fetch('./data.json')` で読み込み、件数表示・カルーセル・スフィアを初期化する
 - `yariItems`: やりたいこと（現在 12 件）
-- `tryItems`: やってみたいこと（現在 33 件）
+- `tryItems`: やってみたいこと（現在 34 件）
 - `artists`: 行きたいライブ（現在 36 件）
 
 ### 3D カルーセル

@@ -82,3 +82,13 @@
 
 - ローカルで確認する場合、`index.html` を直接開くのではなく `python -m http.server 8000` などで配信して確認する
 - GitHub Pages では `index.html` と同階層の `data.json` がそのまま配信されるため、この構成で動作する
+
+---
+
+## [codex] 2026-06-25 — やってみたいこと追加
+
+### やったこと
+
+- `data.json` のやってみたいことに「麻辣湯食べる」を追加
+- `やりたいこと.txt` と `demo.html` の表示データを同期
+- `docs/ARCHITECTURE.md` のやってみたいこと件数を 34 件に更新
