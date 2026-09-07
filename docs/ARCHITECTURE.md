@@ -17,7 +17,8 @@ want-to-do/
 ├── tests/
 │   ├── test_static_assets.py # 静的ファイル構成のテスト
 │   ├── test_completion.py # 完了表示の回帰テスト（pytest + Node.js）
-│   └── test_resize.py   # リサイズ追従と状態維持の回帰テスト（pytest + Node.js）
+│   ├── test_resize.py   # リサイズ追従と状態維持の回帰テスト（pytest + Node.js）
+│   └── test_touch_cancel.py # タッチ中断処理の回帰テスト（pytest + Node.js）
 └── docs/
     ├── ARCHITECTURE.md # このファイル
     ├── CURRENT_TASK.md # 進行中タスク
@@ -58,6 +59,7 @@ want-to-do/
 - スロット数は 24 固定
 - angular step 固定 = 360 / slots
 - ドラッグ＋慣性＋オート回転
+- `touchcancel` 時はドラッグ状態を解除し、領域外の操作を捕捉せず自動回転へ戻る
 - `renderCarouselItem(card, item)` で初期表示と回転中のカード差し替えを共通化し、項目ごとに完了表示を更新する
 
 ### 3D スフィア
@@ -67,6 +69,7 @@ want-to-do/
 - ホバー: font-size 1.22 倍・白色・カラーグロー
 - クリック: Google 検索（`[アーティスト名] ライブ チケット`）を別タブ
 - 当たり判定は `transform: scale()` を使わず `font-size` のみで制御（hit area = 見た目）
+- `touchcancel` 時はドラッグ状態を解除し、領域外の操作を捕捉せず自動回転へ戻る
 
 ## 技術スタック
 

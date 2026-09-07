@@ -86,6 +86,7 @@ function initCarousel(wrapId, data) {
   window.addEventListener('touchmove',  onMove, {passive:false});
   window.addEventListener('mouseup',  onUp);
   window.addEventListener('touchend', onUp);
+  window.addEventListener('touchcancel', onUp);
 
   (function tick() {
     if (!dragging) {
@@ -195,6 +196,7 @@ function initSphere(artists) {
     window.addEventListener('touchmove',  onMove, {passive:false});
     window.addEventListener('mouseup',  onUp);
     window.addEventListener('touchend', onUp);
+    window.addEventListener('touchcancel', onUp);
 
     (function tick() {
       if (W <= 0 || H <= 0) {
