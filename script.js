@@ -29,15 +29,11 @@ function initCarousel(wrapId, data) {
   const wrap = document.getElementById(wrapId);
   const n = data.length;
   if (n === 0) return;
-  const isMobile = window.innerWidth < 640;
-  const cardW = isMobile ? 62 : 85, cardH = isMobile ? 46 : 62;
-  const radius = isMobile ? 260 : 600;
   const SLOTS = 24;                        // 常に24枚固定
   const step = 360 / SLOTS;
 
   const stage = document.createElement('div');
   stage.className = 'cr-stage';
-  stage.style.cssText = `width:${cardW}px;height:${cardH}px;`;
 
   let nextIdx = SLOTS;                     // 次に表示するデータのインデックス
 
@@ -45,15 +41,31 @@ function initCarousel(wrapId, data) {
     const it = data[i % n];
     const card = document.createElement('div');
     card.className = 'cr-card';
-    card.style.cssText =
-      `width:${cardW}px;height:${cardH}px;`+
-      `left:${-cardW/2}px;top:${-cardH/2}px;`+
-      `transform:rotateY(${step * i}deg) translateZ(${radius}px);`;
     renderCarouselItem(card, it);
     stage.appendChild(card);
     return { el: card, baseAngle: step * i, inBack: false };
   });
   wrap.appendChild(stage);
+
+  let isMobile;
+  function updateSize() {
+    const mobile = window.innerWidth <= 640;
+    if (mobile === isMobile) return;
+    isMobile = mobile;
+    const cardW = mobile ? 62 : 85, cardH = mobile ? 46 : 62;
+    const radius = mobile ? 260 : 600;
+    stage.style.width = `${cardW}px`;
+    stage.style.height = `${cardH}px`;
+    cards.forEach(({el, baseAngle}) => {
+      el.style.width = `${cardW}px`;
+      el.style.height = `${cardH}px`;
+      el.style.left = `${-cardW/2}px`;
+      el.style.top = `${-cardH/2}px`;
+      el.style.transform = `rotateY(${baseAngle}deg) translateZ(${radius}px)`;
+    });
+  }
+  updateSize();
+  window.addEventListener('resize', updateSize);
 
   const AUTO = 0.04;
   let ang = 0, vel = 0, dragging = false, lastX = 0;
@@ -113,8 +125,15 @@ function initSphere(artists) {
   observer.observe(wrap);
 
   function start() {
-    const W = wrap.clientWidth, H = wrap.clientHeight;
-    const R = Math.min(W, H) * 0.36;
+    let W, H, R;
+    function updateSize() {
+      W = wrap.clientWidth;
+      H = wrap.clientHeight;
+      R = Math.min(W, H) * 0.36;
+    }
+    updateSize();
+    const resizeObserver = new ResizeObserver(updateSize);
+    resizeObserver.observe(wrap);
     const fov = 600;
     const φ = (1 + Math.sqrt(5)) / 2;
 
@@ -122,9 +141,10 @@ function initSphere(artists) {
       const θ = Math.acos(1 - 2*(i+.5)/artists.length);
       const λ = 2*Math.PI*i/φ;
       return {
-        ox: R*Math.sin(θ)*Math.cos(λ),
-        oy: R*Math.sin(θ)*Math.sin(λ),
-        oz: R*Math.cos(θ),
+        // 単位球の座標を保持し、現在の半径は投影時に適用する。
+        ox: Math.sin(θ)*Math.cos(λ),
+        oy: Math.sin(θ)*Math.sin(λ),
+        oz: Math.cos(θ),
         name
       };
     });
@@ -177,6 +197,10 @@ function initSphere(artists) {
     window.addEventListener('touchend', onUp);
 
     (function tick() {
+      if (W <= 0 || H <= 0) {
+        requestAnimationFrame(tick);
+        return;
+      }
       if (!dragging) {
         vy += (0.0018 - vy) * 0.02;  /* 慣性後にオートに戻る */
         vx += (0.0004 - vx) * 0.02;
@@ -186,8 +210,8 @@ function initSphere(artists) {
       const cY=Math.cos(ay), sY=Math.sin(ay);
 
       const projected = tags.map(({el, ox, oy, oz, color}) => {
-        const x1 = ox*cY - oz*sY, z1 = ox*sY + oz*cY;
-        const y2 = oy*cX - z1*sX, z2 = oy*sX + z1*cX;
+        const x1 = (ox*cY - oz*sY)*R, z1 = (ox*sY + oz*cY)*R;
+        const y2 = oy*R*cX - z1*sX, z2 = oy*R*sX + z1*cX;
         const s = fov / (fov + z2);
         return {el, px: W/2 + x1*s, py: H/2 + y2*s, s, z: z2};
       });

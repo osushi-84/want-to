@@ -16,7 +16,8 @@ want-to-do/
 ├── やりたいこと.txt      # データの元ネタ・メモ
 ├── tests/
 │   ├── test_static_assets.py # 静的ファイル構成のテスト
-│   └── test_completion.py # 完了表示の回帰テスト（pytest + Node.js）
+│   ├── test_completion.py # 完了表示の回帰テスト（pytest + Node.js）
+│   └── test_resize.py   # リサイズ追従と状態維持の回帰テスト（pytest + Node.js）
 └── docs/
     ├── ARCHITECTURE.md # このファイル
     ├── CURRENT_TASK.md # 進行中タスク
@@ -53,6 +54,7 @@ want-to-do/
 
 - `initCarousel(wrapId, data)` を共通関数として定義し、やりたいこと・やってみたいことの両方に使用
 - 半径 600px 固定（モバイル 260px）
+- 画面幅が 640px 以下かをリサイズ時にも判定し、既存カードの寸法と半径を更新する。回転角とカードの内容は維持する
 - スロット数は 24 固定
 - angular step 固定 = 360 / slots
 - ドラッグ＋慣性＋オート回転
@@ -61,6 +63,7 @@ want-to-do/
 ### 3D スフィア
 
 - フィボナッチ格子でアーティストを球面に均等配置
+- 基準座標は単位球として保持し、`ResizeObserver` で表示領域の幅・高さ・半径を更新して投影する。リサイズ時も回転とホバーの状態を維持し、幅または高さが 0 の間は描画を待機する
 - ホバー: font-size 1.22 倍・白色・カラーグロー
 - クリック: Google 検索（`[アーティスト名] ライブ チケット`）を別タブ
 - 当たり判定は `transform: scale()` を使わず `font-size` のみで制御（hit area = 見た目）
@@ -69,4 +72,4 @@ want-to-do/
 
 - HTML / CSS / Vanilla JS
 - Google Fonts（Noto Serif JP, Noto Sans JP, IBM Plex Mono）
-- Web API: requestAnimationFrame, IntersectionObserver
+- Web API: requestAnimationFrame, IntersectionObserver, ResizeObserver
