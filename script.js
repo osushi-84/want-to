@@ -191,7 +191,8 @@ function initSphere(artists) {
         const s = fov / (fov + z2);
         return {el, px: W/2 + x1*s, py: H/2 + y2*s, s, z: z2};
       });
-      projected.sort((a,b) => a.z - b.z);
+      // 奥から順に並べ、手前のタグほど z-index を高くする。
+      projected.sort((a,b) => b.z - a.z);
 
       projected.forEach(({el, px, py, s, z, color}, i) => {
         const t  = 1 - (z + R) / (2 * R);
