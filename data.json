@@ -45,9 +45,9 @@
     { "e": "⛴️", "t": "フェリーに乗る", "completed": false },
     { "e": "🎭", "t": "お笑い見に行く", "completed": false },
     { "e": "🐾", "t": "生き物カフェ", "completed": false },
-    { "e": "🍖", "t": "シュラスコ食べる", "completed": false },
+    { "e": "🍖", "t": "シュラスコ食べる", "completed": true },
     { "e": "🟤", "t": "泥団子作り", "completed": false },
-    { "e": "🌶️", "t": "麻辣湯食べる", "completed": false }
+    { "e": "🌶️", "t": "麻辣湯食べる", "completed": true }
   ],
   "artists": [
     "サカナクション",
