@@ -18,7 +18,7 @@ want-to-do/
 │   ├── test_static_assets.py # 静的ファイル構成のテスト
 │   ├── test_completion.py # 完了表示の回帰テスト（pytest + Node.js）
 │   ├── test_resize.py   # リサイズ追従と状態維持の回帰テスト（pytest + Node.js）
-│   └── test_touch_cancel.py # タッチ中断処理の回帰テスト（pytest + Node.js）
+│   └── test_touch_cancel.py # ドラッグ操作の回帰テスト（pytest + Node.js）
 └── docs/
     ├── ARCHITECTURE.md # このファイル
     ├── CURRENT_TASK.md # 進行中タスク
@@ -70,6 +70,7 @@ want-to-do/
 - クリック: Google 検索（`[アーティスト名] ライブ チケット`）を別タブ
 - 当たり判定は `transform: scale()` を使わず `font-size` のみで制御（hit area = 見た目）
 - `touchcancel` 時はドラッグ状態を解除し、領域外の操作を捕捉せず自動回転へ戻る
+- ドラッグ中はポインターの移動量だけ回転へ反映し、静止中は停止する。ポインターを離すと最後の移動速度で慣性回転する
 
 ## 技術スタック
 

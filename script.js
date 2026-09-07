@@ -206,8 +206,8 @@ function initSphere(artists) {
       if (!dragging) {
         vy += (0.0018 - vy) * 0.02;  /* 慣性後にオートに戻る */
         vx += (0.0004 - vx) * 0.02;
+        ay += vy; ax += vx;
       }
-      ay += vy; ax += vx;
       const cX=Math.cos(ax), sX=Math.sin(ax);
       const cY=Math.cos(ay), sY=Math.sin(ay);
 
