@@ -23,7 +23,9 @@
 - [x] `index.html` から表示データを分離し、`data.json` 管理に変更
 - [x] やってみたいこと追加（麻辣湯食べる）
 - [x] `index.html` 内の CSS / JavaScript を `style.css` / `script.js` に分離
+- [x] `data.json` の完了状態を読み取り、やってみたいことのカードに「✓ 完了」を表示
 
 ## 次にやること（未定）
 
 - やりたいことを更新する場合は `data.json` を編集する
+- やってみたいことを完了したら、対象項目の `completed` を `true` にして配信する（未完了に戻す場合は `false`）

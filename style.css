@@ -161,6 +161,16 @@ body {
 }
 .cr-ic { font-size: 1.05rem; }
 .cr-tx { font-size: .7rem; }
+.cr-card.is-complete {
+  border-color: var(--teal);
+  background: rgba(56,201,184,.12);
+}
+.cr-completed {
+  position: absolute; top: -10px; right: -6px;
+  padding: 2px 6px; border-radius: 10px;
+  background: var(--teal); color: var(--bg);
+  font: 500 .6rem/1.5 var(--sans); white-space: nowrap;
+}
 
 /* ════════════════════════════
    SPHERE

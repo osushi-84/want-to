@@ -18,6 +18,13 @@ function updateCounts(data) {
   document.getElementById('artistBadge').textContent = `${data.artists.length} artists`;
 }
 
+function renderCarouselItem(card, item) {
+  const completed = item.completed === true;
+  card.classList.toggle('is-complete', completed);
+  card.innerHTML = `<span class="cr-ic">${escapeHTML(item.e)}</span><span class="cr-tx">${escapeHTML(item.t)}</span>` +
+    (completed ? '<span class="cr-completed">✓ 完了</span>' : '');
+}
+
 function initCarousel(wrapId, data) {
   const wrap = document.getElementById(wrapId);
   const n = data.length;
@@ -42,7 +49,7 @@ function initCarousel(wrapId, data) {
       `width:${cardW}px;height:${cardH}px;`+
       `left:${-cardW/2}px;top:${-cardH/2}px;`+
       `transform:rotateY(${step * i}deg) translateZ(${radius}px);`;
-    card.innerHTML = `<span class="cr-ic">${escapeHTML(it.e)}</span><span class="cr-tx">${escapeHTML(it.t)}</span>`;
+    renderCarouselItem(card, it);
     stage.appendChild(card);
     return { el: card, baseAngle: step * i, inBack: false };
   });
@@ -83,8 +90,7 @@ function initCarousel(wrapId, data) {
       if (nowInBack && !c.inBack) {
         const it = data[nextIdx % n];
         nextIdx++;
-        c.el.querySelector('.cr-ic').textContent = it.e;
-        c.el.querySelector('.cr-tx').textContent = it.t;
+        renderCarouselItem(c.el, it);
       }
       c.inBack = nowInBack;
     });

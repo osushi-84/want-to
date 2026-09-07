@@ -15,7 +15,8 @@ want-to-do/
 ├── demo.html           # 表示モード比較デモ（横流れ・3Dカルーセル・球体・オービット）
 ├── やりたいこと.txt      # データの元ネタ・メモ
 ├── tests/
-│   └── test_static_assets.py # 静的ファイル構成のテスト
+│   ├── test_static_assets.py # 静的ファイル構成のテスト
+│   └── test_completion.py # 完了表示の回帰テスト（pytest + Node.js）
 └── docs/
     ├── ARCHITECTURE.md # このファイル
     ├── CURRENT_TASK.md # 進行中タスク
@@ -45,6 +46,8 @@ want-to-do/
 - `yariItems`: やりたいこと（現在 12 件）
 - `tryItems`: やってみたいこと（現在 34 件）
 - `artists`: 行きたいライブ（現在 36 件）
+- `tryItems` の各項目の `completed`（真偽値）で完了状態を保持する。`true` の項目はカードに「✓ 完了」と緑色の枠を表示し、`false` または未指定は未完了として表示する
+- 完了状態の変更は配信元の `data.json` を編集して反映する。画面は読み取り専用で、ブラウザへの保存や画面からの切り替えは行わない
 
 ### 3D カルーセル
 
@@ -53,6 +56,7 @@ want-to-do/
 - スロット数は 24 固定
 - angular step 固定 = 360 / slots
 - ドラッグ＋慣性＋オート回転
+- `renderCarouselItem(card, item)` で初期表示と回転中のカード差し替えを共通化し、項目ごとに完了表示を更新する
 
 ### 3D スフィア
 
